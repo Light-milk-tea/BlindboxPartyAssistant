@@ -1,0 +1,54 @@
+{
+    "addons": {},
+    "controller": {
+        "kinds": [
+            "Adb"
+        ]
+    },
+    "features": {
+        "ci": {
+            "enabled": false
+        },
+        "quality": {
+            "enabled": false
+        },
+        "release": {
+            "enabled": false
+        },
+        "vscode": {
+            "enabled": false
+        }
+    },
+    "license": {
+        "spdx": "MIT"
+    },
+    "maafw": {
+        "channel": "stable",
+        "version": ""
+    },
+    "network": {
+        "mode": "auto"
+    },
+    "project": {
+        "displayName": "盲盒派对小助手",
+        "initialTemplate": "pipeline",
+        "slug": "blindbox-party-assistant",
+        "version": "0.1.0"
+    },
+    "resources": [
+        {
+            "enabled": true,
+            "label": "Base",
+            "path": "resource/base",
+            "slug": "base"
+        }
+    ],
+    "runtime": {
+        "mfa": {
+            "channel": "stable",
+            "enabled": true,
+            "version": ""
+        }
+    },
+    "schemaVersion": 2
+}
