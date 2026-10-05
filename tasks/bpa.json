@@ -1,0 +1,46 @@
+{
+    "task": [
+        {
+            "name": "StartUp",
+            "label": "开始唤醒",
+            "entry": "StartUp",
+            "default_check": true,
+            "description": "启动盲盒派对并进入主界面。已在主界面则直接结束。未能进入主界面时本任务失败，后续任务不应继续。"
+        },
+        {
+            "name": "Award",
+            "label": "领取日常/周常奖励",
+            "entry": "Award",
+            "default_check": false,
+            "description": "尚未实现。勾选后会跳过，不会操作游戏。"
+        },
+        {
+            "name": "Friend",
+            "label": "好友收赠",
+            "entry": "Friend",
+            "default_check": false,
+            "description": "尚未实现。勾选后会跳过，不会操作游戏。"
+        },
+        {
+            "name": "Home",
+            "label": "家园收菜与派遣",
+            "entry": "Home",
+            "default_check": false,
+            "description": "尚未实现。勾选后会跳过，不会操作游戏。"
+        },
+        {
+            "name": "Fight",
+            "label": "刷体力",
+            "entry": "Fight",
+            "default_check": false,
+            "description": "尚未实现。勾选后会跳过，不会操作游戏。"
+        },
+        {
+            "name": "Idle",
+            "label": "放置挂机",
+            "entry": "Idle",
+            "default_check": false,
+            "description": "尚未实现。勾选后会跳过，不会操作游戏。"
+        }
+    ]
+}

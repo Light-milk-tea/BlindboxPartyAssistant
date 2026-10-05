@@ -1,0 +1,28 @@
+{
+    "interface_version": 2,
+    "name": "blindbox-party-assistant",
+    "label": "盲盒派对小助手",
+    "title": "盲盒派对小助手",
+    "version": "v0.1.0",
+    "description": "盲盒派对小助手。连接模拟器后按顺序执行勾选的任务。",
+    "controller": [
+        {
+            "name": "Adb",
+            "label": "安卓模拟器",
+            "type": "Adb",
+            "display_short_side": 720
+        }
+    ],
+    "resource": [
+        {
+            "name": "base",
+            "label": "Base",
+            "path": [
+                "./resource/base"
+            ]
+        }
+    ],
+    "import": [
+        "./tasks/bpa.json"
+    ]
+}
