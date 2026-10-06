@@ -1,0 +1,37 @@
+{
+    "Award": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "领取日常/周常奖励尚未实现，已跳过"
+        }
+    },
+    "Friend": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "好友收赠尚未实现，已跳过"
+        }
+    },
+    "Home": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "家园收菜与派遣尚未实现，已跳过"
+        }
+    },
+    "Fight": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "刷体力尚未实现，已跳过"
+        }
+    },
+    "Idle": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "放置挂机尚未实现，已跳过"
+        }
+    }
+}
