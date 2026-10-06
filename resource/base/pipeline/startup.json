@@ -1,0 +1,100 @@
+{
+    "StartUp": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": [
+            "StartUpCloseReward",
+            "StartUpClickStart",
+            "StartUpAtHome",
+            "StartUpLaunch"
+        ]
+    },
+    "StartUpLaunch": {
+        "recognition": "DirectHit",
+        "action": "StartApp",
+        "package": "com.palmpi.matrix.yofun.mumu",
+        "post_delay": 1000,
+        "focus": {
+            "Node.Action.Starting": "正在启动盲盒派对"
+        },
+        "next": [
+            "StartUpWait"
+        ]
+    },
+    "StartUpWait": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "rate_limit": 1000,
+        "timeout": 180000,
+        "next": [
+            "StartUpCloseReward",
+            "StartUpClickStart",
+            "StartUpAtHome"
+        ]
+    },
+    "StartUpClickStart": {
+        "recognition": "TemplateMatch",
+        "template": "startup/start-game.png",
+        "roi": [
+            500,
+            400,
+            280,
+            120
+        ],
+        "threshold": 0.85,
+        "action": "Click",
+        "target": [
+            610,
+            545,
+            60,
+            60
+        ],
+        "post_delay": 1500,
+        "focus": {
+            "Node.Action.Succeeded": "点击开始游戏"
+        },
+        "next": [
+            "StartUpWait"
+        ]
+    },
+    "StartUpCloseReward": {
+        "recognition": "TemplateMatch",
+        "template": "startup/reward.png",
+        "roi": [
+            360,
+            10,
+            600,
+            250
+        ],
+        "threshold": 0.7,
+        "action": "Click",
+        "target": [
+            90,
+            90,
+            40,
+            40
+        ],
+        "post_delay": 1000,
+        "focus": {
+            "Node.Action.Succeeded": "关闭获得奖励弹窗"
+        },
+        "next": [
+            "StartUpWait"
+        ]
+    },
+    "StartUpAtHome": {
+        "recognition": "TemplateMatch",
+        "template": "startup/home.png",
+        "roi": [
+            960,
+            520,
+            300,
+            180
+        ],
+        "threshold": 0.85,
+        "action": "DoNothing",
+        "focus": {
+            "Node.Recognition.Succeeded": "已进入主界面"
+        }
+    }
+}
