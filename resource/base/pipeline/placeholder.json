@@ -26,12 +26,5 @@
         "focus": {
             "Node.Action.Succeeded": "刷体力尚未实现，已跳过"
         }
-    },
-    "Idle": {
-        "recognition": "DirectHit",
-        "action": "DoNothing",
-        "focus": {
-            "Node.Action.Succeeded": "放置挂机尚未实现，已跳过"
-        }
     }
 }

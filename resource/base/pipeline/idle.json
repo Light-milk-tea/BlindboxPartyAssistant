@@ -1,0 +1,117 @@
+{
+    "Idle": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "rate_limit": 1000,
+        "next": [
+            "IdleClickChallenge",
+            "IdleClickReady",
+            "IdleDismissLevel",
+            "IdleInBattle",
+            "IdleEnter"
+        ]
+    },
+    "IdleDismissLevel": {
+        "recognition": "TemplateMatch",
+        "template": "idle/level.png",
+        "roi": [
+            360,
+            70,
+            560,
+            180
+        ],
+        "threshold": 0.7,
+        "timeout": 1000,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1000,
+        "focus": {
+            "Node.Action.Succeeded": "关闭等级提升"
+        },
+        "next": [
+            "Idle"
+        ]
+    },
+    "IdleClickReady": {
+        "recognition": "TemplateMatch",
+        "template": [
+            "idle/ready.png",
+            "idle/ready_dark.png"
+        ],
+        "roi": [
+            1000,
+            600,
+            280,
+            120
+        ],
+        "threshold": 0.75,
+        "timeout": 1000,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1500,
+        "focus": {
+            "Node.Action.Succeeded": "点击挑战"
+        },
+        "next": [
+            "Idle"
+        ]
+    },
+    "IdleClickChallenge": {
+        "recognition": "TemplateMatch",
+        "template": "idle/challenge.png",
+        "roi": [
+            620,
+            520,
+            420,
+            180
+        ],
+        "threshold": 0.8,
+        "timeout": 1000,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1500,
+        "focus": {
+            "Node.Action.Succeeded": "点击立即挑战"
+        },
+        "next": [
+            "Idle"
+        ]
+    },
+    "IdleInBattle": {
+        "recognition": "TemplateMatch",
+        "template": "idle/hall.png",
+        "roi": [
+            990,
+            0,
+            280,
+            80
+        ],
+        "threshold": 0.8,
+        "timeout": 1000,
+        "action": "DoNothing",
+        "next": [
+            "Idle"
+        ]
+    },
+    "IdleEnter": {
+        "recognition": "TemplateMatch",
+        "template": "idle/enter.png",
+        "roi": [
+            860,
+            400,
+            360,
+            140
+        ],
+        "threshold": 0.8,
+        "timeout": 1000,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1500,
+        "focus": {
+            "Node.Action.Succeeded": "进入放置作战"
+        },
+        "next": [
+            "Idle"
+        ]
+    }
+}
