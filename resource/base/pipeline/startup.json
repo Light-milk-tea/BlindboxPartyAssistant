@@ -4,6 +4,7 @@
         "action": "DoNothing",
         "next": [
             "StartUpCloseReward",
+            "[JumpBack]OfflineSeen",
             "StartUpClickStart",
             "StartUpAtHome",
             "StartUpLaunch"
@@ -28,6 +29,7 @@
         "timeout": 10000,
         "next": [
             "StartUpCloseReward",
+            "[JumpBack]OfflineSeen",
             "StartUpClickStart",
             "StartUpAtHome",
             "[JumpBack]StartUpTick"

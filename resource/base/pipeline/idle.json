@@ -22,6 +22,7 @@
         "rate_limit": 1000,
         "timeout": 20000,
         "next": [
+            "[JumpBack]OfflineSeen",
             "IdleClickChallenge",
             "IdleClickReady",
             "IdleDismissLevel",

@@ -1,0 +1,314 @@
+{
+    "OfflineEarnings": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": [
+            "[JumpBack]OfflineSeen",
+            "OfflineAlreadyHome",
+            "OfflineEarningsDone"
+        ]
+    },
+    "OfflineAlreadyHome": {
+        "recognition": "TemplateMatch",
+        "template": "startup/home.png",
+        "roi": [
+            960,
+            520,
+            300,
+            180
+        ],
+        "threshold": 0.85,
+        "action": "DoNothing",
+        "focus": {
+            "Node.Recognition.Succeeded": "没有离线收益界面"
+        }
+    },
+    "OfflineEarningsDone": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "没有离线收益界面"
+        }
+    },
+    "OfflineSeen": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "offline/title.png",
+                "roi": [
+                    280,
+                    0,
+                    720,
+                    200
+                ],
+                "threshold": 0.75
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": "offline/claim.png",
+                "roi": [
+                    240,
+                    480,
+                    820,
+                    200
+                ],
+                "threshold": 0.8
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": "offline/free.png",
+                "roi": [
+                    740,
+                    180,
+                    520,
+                    520
+                ],
+                "threshold": 0.72
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": "offline/cancel.png",
+                "roi": [
+                    280,
+                    520,
+                    420,
+                    190
+                ],
+                "threshold": 0.8
+            }
+        ],
+        "action": "DoNothing",
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineStep": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "rate_limit": 500,
+        "timeout": 12000,
+        "next": [
+            "OfflineDismissGain",
+            "OfflineClaim",
+            "OfflineClickFree",
+            "OfflineOpenQuick",
+            "OfflineCancel",
+            "OfflineClosePanel",
+            "OfflineTitleGone"
+        ]
+    },
+    "OfflineDismissGain": {
+        "recognition": "TemplateMatch",
+        "template": "startup/reward.png",
+        "roi": [
+            360,
+            10,
+            600,
+            250
+        ],
+        "threshold": 0.75,
+        "action": "Click",
+        "target": [
+            90,
+            90,
+            40,
+            40
+        ],
+        "post_delay": 1000,
+        "focus": {
+            "Node.Action.Succeeded": "关闭获得奖励"
+        },
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineClaim": {
+        "recognition": "TemplateMatch",
+        "template": "offline/claim.png",
+        "roi": [
+            240,
+            480,
+            820,
+            200
+        ],
+        "threshold": 0.8,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1500,
+        "max_hit": 2,
+        "focus": {
+            "Node.Action.Succeeded": "点击收获奖励"
+        },
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineClickFree": {
+        "recognition": "TemplateMatch",
+        "template": "offline/free.png",
+        "roi": [
+            740,
+            500,
+            520,
+            200
+        ],
+        "threshold": 0.72,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1500,
+        "max_hit": 2,
+        "focus": {
+            "Node.Action.Succeeded": "领取免费快速挂机"
+        },
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineOpenQuick": {
+        "recognition": "TemplateMatch",
+        "template": "offline/free.png",
+        "roi": [
+            740,
+            180,
+            520,
+            220
+        ],
+        "threshold": 0.72,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1500,
+        "max_hit": 2,
+        "focus": {
+            "Node.Action.Succeeded": "打开快速挂机"
+        },
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineCancel": {
+        "recognition": "TemplateMatch",
+        "template": "offline/cancel.png",
+        "roi": [
+            280,
+            520,
+            420,
+            190
+        ],
+        "threshold": 0.8,
+        "action": "Click",
+        "target": true,
+        "post_delay": 1000,
+        "focus": {
+            "Node.Action.Succeeded": "免费次数已用过，关闭快速挂机"
+        },
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineClosePanel": {
+        "recognition": "TemplateMatch",
+        "template": "offline/title.png",
+        "roi": [
+            280,
+            0,
+            720,
+            200
+        ],
+        "threshold": 0.75,
+        "action": "Click",
+        "target": [
+            1080,
+            220,
+            50,
+            50
+        ],
+        "post_delay": 1000,
+        "max_hit": 3,
+        "focus": {
+            "Node.Action.Succeeded": "关闭离线收益"
+        },
+        "next": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineTitleGone": {
+        "recognition": "TemplateMatch",
+        "template": "offline/title.png",
+        "roi": [
+            280,
+            0,
+            720,
+            200
+        ],
+        "threshold": 0.75,
+        "inverse": true,
+        "action": "DoNothing",
+        "rate_limit": 200,
+        "timeout": 800,
+        "max_hit": 8,
+        "next": [
+            "OfflineRewardGone"
+        ],
+        "on_error": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineRewardGone": {
+        "recognition": "TemplateMatch",
+        "template": "startup/reward.png",
+        "roi": [
+            360,
+            10,
+            600,
+            250
+        ],
+        "threshold": 0.75,
+        "inverse": true,
+        "action": "DoNothing",
+        "rate_limit": 200,
+        "timeout": 800,
+        "next": [
+            "OfflineCancelGone"
+        ],
+        "on_error": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineCancelGone": {
+        "recognition": "TemplateMatch",
+        "template": "offline/cancel.png",
+        "roi": [
+            280,
+            520,
+            420,
+            190
+        ],
+        "threshold": 0.8,
+        "inverse": true,
+        "action": "DoNothing",
+        "rate_limit": 200,
+        "timeout": 800,
+        "next": [
+            "OfflineFinished"
+        ],
+        "on_error": [
+            "OfflineStep"
+        ]
+    },
+    "OfflineFinished": {
+        "recognition": "TemplateMatch",
+        "template": "startup/home.png",
+        "roi": [
+            960,
+            520,
+            300,
+            180
+        ],
+        "threshold": 0.85,
+        "action": "DoNothing",
+        "focus": {
+            "Node.Recognition.Succeeded": "离线收益已处理，回到首页"
+        }
+    }
+}

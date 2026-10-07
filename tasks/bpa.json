@@ -112,6 +112,13 @@
             ]
         },
         {
+            "name": "OfflineEarnings",
+            "label": "领取离线收益",
+            "entry": "OfflineEarnings",
+            "default_check": true,
+            "description": "登录或挂机久了出现离线收益时，点击收获奖励，并领取每天一次的免费快速挂机。按钮已经变成要花猫猫币时只关闭，不点击。没有这个界面就直接结束。开始唤醒和放置挂机里也会处理它，避免卡在这个界面。"
+        },
+        {
             "name": "Award",
             "label": "领取日常/周常奖励",
             "entry": "Award",
