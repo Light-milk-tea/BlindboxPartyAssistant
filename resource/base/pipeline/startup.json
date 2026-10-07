@@ -25,12 +25,20 @@
         "recognition": "DirectHit",
         "action": "DoNothing",
         "rate_limit": 1000,
-        "timeout": 180000,
+        "timeout": 10000,
         "next": [
             "StartUpCloseReward",
             "StartUpClickStart",
-            "StartUpAtHome"
+            "StartUpAtHome",
+            "[JumpBack]StartUpTick"
         ]
+    },
+    "StartUpTick": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "pre_delay": 0,
+        "post_delay": 1000,
+        "max_hit": 180
     },
     "StartUpClickStart": {
         "recognition": "TemplateMatch",

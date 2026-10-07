@@ -17,20 +17,99 @@
             ]
         }
     ],
+    "option": {
+        "MuMuLaunch": {
+            "type": "input",
+            "label": "MuMu",
+            "description": "多开时填写序号，从 0 开始。安装目录留空则自动查找。",
+            "inputs": [
+                {
+                    "name": "index",
+                    "label": "多开序号",
+                    "description": "第一台一般是 0。",
+                    "default": "0",
+                    "pipeline_type": "string",
+                    "verify": "^\\d+$",
+                    "pattern_msg": "序号请填写数字"
+                },
+                {
+                    "name": "path",
+                    "label": "安装目录",
+                    "description": "留空则自动查找。可以填 MuMu 安装目录，或 MuMuManager.exe 的路径。",
+                    "default": "",
+                    "pipeline_type": "string"
+                }
+            ]
+        },
+        "StartUpSeconds": {
+            "type": "input",
+            "label": "等待进入主界面",
+            "description": "还没进主界面时，大约按这个秒数继续等。已经在主界面则马上结束。",
+            "inputs": [
+                {
+                    "name": "seconds",
+                    "label": "秒",
+                    "default": "180",
+                    "pipeline_type": "int",
+                    "verify": "^[1-9]\\d*$",
+                    "pattern_msg": "请填写至少 1 的整数"
+                }
+            ],
+            "pipeline_override": {
+                "StartUpTick": {
+                    "max_hit": "{seconds}"
+                }
+            }
+        },
+        "IdleMinutes": {
+            "type": "input",
+            "label": "挂机时长",
+            "description": "单位是分钟。填 0 表示一直挂到手动停止。",
+            "inputs": [
+                {
+                    "name": "minutes",
+                    "label": "分钟",
+                    "default": "0",
+                    "pipeline_type": "string",
+                    "verify": "^\\d+$",
+                    "pattern_msg": "请填写 0 或正整数"
+                }
+            ],
+            "pipeline_override": {
+                "Idle": {
+                    "args": [
+                        "-NoProfile",
+                        "-ExecutionPolicy",
+                        "Bypass",
+                        "-File",
+                        "{RESOURCE_DIR}/idle-budget.ps1",
+                        "start",
+                        "{minutes}"
+                    ]
+                }
+            }
+        }
+    },
     "task": [
         {
             "name": "LaunchMuMu",
             "label": "启动MuMu",
             "entry": "LaunchMuMu",
             "default_check": true,
-            "description": "勾选后，点击开始任务时会自动查找并启动 MuMu。已经开机则跳过。不勾选则不启动模拟器。"
+            "description": "勾选后，点击开始任务时会自动查找并启动 MuMu。已经开机则跳过。不勾选则不启动模拟器。齿轮里可以填多开序号；安装目录留空则自动查找。",
+            "option": [
+                "MuMuLaunch"
+            ]
         },
         {
             "name": "StartUp",
             "label": "开始唤醒",
             "entry": "StartUp",
             "default_check": true,
-            "description": "启动盲盒派对并进入主界面。已在主界面则直接结束。未能进入主界面时本任务失败，后续任务不应继续。"
+            "description": "启动盲盒派对并进入主界面。已在主界面则直接结束。未能进入主界面时本任务失败，后续任务不应继续。齿轮里可以改等待进入主界面的秒数，默认 180 秒。",
+            "option": [
+                "StartUpSeconds"
+            ]
         },
         {
             "name": "Award",
@@ -65,7 +144,10 @@
             "label": "放置挂机",
             "entry": "Idle",
             "default_check": false,
-            "description": "在首页进入放置作战。看到立即挑战，或右下角的挑战，就点击。出现等级提升时点击关闭。战斗过程中只等待。认不到首页或放置作战界面时本任务失败。"
+            "description": "在首页进入放置作战。看到立即挑战，或右下角的挑战，就点击。出现等级提升时点击关闭。战斗过程中只等待。认不到首页或放置作战界面时本任务失败。齿轮里可以填挂机分钟数，0 表示一直挂到手动停止。",
+            "option": [
+                "IdleMinutes"
+            ]
         }
     ]
 }

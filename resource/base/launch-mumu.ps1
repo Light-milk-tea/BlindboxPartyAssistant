@@ -88,9 +88,30 @@ function Get-LaunchConfig {
     return $null
 }
 
-function Find-MuMuManager {
+function Get-MuMuLaunchData {
     param($Config)
+    $item = @($Config.TaskItems) | Where-Object { $_.name -eq 'LaunchMuMu' } | Select-Object -First 1
+    if ($null -eq $item -or $null -eq $item.option) { return $null }
+    foreach ($opt in @($item.option)) {
+        if ($opt -is [string]) { continue }
+        if ([string]$opt.name -ne 'MuMuLaunch') { continue }
+        return $opt.data
+    }
+    return $null
+}
+
+function Find-MuMuManager {
+    param(
+        $Config,
+        $LaunchData
+    )
     $found = New-Object System.Collections.Generic.List[string]
+    if ($null -ne $LaunchData) {
+        $gearPath = ([string]$LaunchData.path).Trim()
+        if (-not [string]::IsNullOrWhiteSpace($gearPath)) {
+            Add-ManagerCandidate $found $gearPath
+        }
+    }
     Add-ManagerCandidate $found ([string]$Config.SoftwarePath)
     $rawConfig = [string]$Config.AdbDevice.Config
     if (-not [string]::IsNullOrWhiteSpace($rawConfig)) {
@@ -125,7 +146,16 @@ function Find-MuMuManager {
 }
 
 function Get-InstanceIndex {
-    param($Config)
+    param(
+        $Config,
+        $LaunchData
+    )
+    if ($null -ne $LaunchData) {
+        $gearIndex = ([string]$LaunchData.index).Trim()
+        if ($gearIndex -match '^\d+$') {
+            return [int]$gearIndex
+        }
+    }
     $rawConfig = [string]$Config.AdbDevice.Config
     if (-not [string]::IsNullOrWhiteSpace($rawConfig)) {
         try {
@@ -209,6 +239,8 @@ function Connect-MuMuAdb {
     Write-Log ("adb connect {0}: {1}" -f $address, ([string]$result.Output).Trim())
 }
 
+$invokedDirectly = $MyInvocation.InvocationName -ne '.'
+if ($invokedDirectly) {
 try {
     $loaded = Get-LaunchConfig
     if ($null -eq $loaded) {
@@ -228,13 +260,35 @@ try {
         exit 0
     }
 
-    $managers = @(Find-MuMuManager $config)
+    $launchData = Get-MuMuLaunchData $config
+    $gearPath = ''
+    $gearIndex = ''
+    if ($null -ne $launchData) {
+        $gearPath = ([string]$launchData.path).Trim()
+        $gearIndex = ([string]$launchData.index).Trim()
+    }
+    $managers = @(Find-MuMuManager $config $launchData)
+    if (-not [string]::IsNullOrWhiteSpace($gearPath)) {
+        $gearRoot = [System.IO.Path]::GetFullPath($gearPath).TrimEnd('\')
+        $gearUsed = @($managers) | Where-Object {
+            $_ -eq $gearRoot -or $_.StartsWith($gearRoot + '\', [System.StringComparison]::OrdinalIgnoreCase)
+        } | Select-Object -First 1
+        if ($gearUsed) {
+            Write-Log ("gear path {0}" -f $gearUsed)
+        }
+        else {
+            Write-Log ("gear path not found: {0}" -f $gearPath)
+        }
+    }
     if ($managers.Count -eq 0) {
         Write-Log 'MuMuManager.exe not found'
         exit 1
     }
     $manager = $managers[0]
-    $index = Get-InstanceIndex $config
+    $index = Get-InstanceIndex $config $launchData
+    if ($gearIndex -match '^\d+$') {
+        Write-Log ("gear index {0}" -f $gearIndex)
+    }
     Write-Log ("use {0} -v {1}" -f $manager, $index)
 
     $info = Get-MuMuInfo $manager $index
@@ -264,4 +318,5 @@ try {
 catch {
     Write-Log ("failed: {0}" -f $_.Exception.Message)
     exit 1
+}
 }

@@ -1,8 +1,26 @@
 {
     "Idle": {
         "recognition": "DirectHit",
+        "action": "Command",
+        "exec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "args": [
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "{RESOURCE_DIR}/idle-budget.ps1",
+            "start",
+            "0"
+        ],
+        "next": [
+            "IdleLoop"
+        ]
+    },
+    "IdleLoop": {
+        "recognition": "DirectHit",
         "action": "DoNothing",
         "rate_limit": 1000,
+        "timeout": 20000,
         "next": [
             "IdleClickChallenge",
             "IdleClickReady",
@@ -21,7 +39,6 @@
             180
         ],
         "threshold": 0.7,
-        "timeout": 1000,
         "action": "Click",
         "target": true,
         "post_delay": 1000,
@@ -29,7 +46,7 @@
             "Node.Action.Succeeded": "关闭等级提升"
         },
         "next": [
-            "Idle"
+            "IdleCheckTime"
         ]
     },
     "IdleClickReady": {
@@ -45,7 +62,6 @@
             120
         ],
         "threshold": 0.75,
-        "timeout": 1000,
         "action": "Click",
         "target": true,
         "post_delay": 1500,
@@ -53,7 +69,7 @@
             "Node.Action.Succeeded": "点击挑战"
         },
         "next": [
-            "Idle"
+            "IdleCheckTime"
         ]
     },
     "IdleClickChallenge": {
@@ -66,7 +82,6 @@
             180
         ],
         "threshold": 0.8,
-        "timeout": 1000,
         "action": "Click",
         "target": true,
         "post_delay": 1500,
@@ -74,7 +89,7 @@
             "Node.Action.Succeeded": "点击立即挑战"
         },
         "next": [
-            "Idle"
+            "IdleCheckTime"
         ]
     },
     "IdleInBattle": {
@@ -87,10 +102,10 @@
             80
         ],
         "threshold": 0.8,
-        "timeout": 1000,
         "action": "DoNothing",
+        "post_delay": 1000,
         "next": [
-            "Idle"
+            "IdleCheckTime"
         ]
     },
     "IdleEnter": {
@@ -103,7 +118,6 @@
             140
         ],
         "threshold": 0.8,
-        "timeout": 1000,
         "action": "Click",
         "target": true,
         "post_delay": 1500,
@@ -111,7 +125,35 @@
             "Node.Action.Succeeded": "进入放置作战"
         },
         "next": [
-            "Idle"
+            "IdleCheckTime"
         ]
+    },
+    "IdleCheckTime": {
+        "recognition": "DirectHit",
+        "action": "Command",
+        "exec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "args": [
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            "{RESOURCE_DIR}/idle-budget.ps1",
+            "check"
+        ],
+        "pre_delay": 0,
+        "post_delay": 0,
+        "next": [
+            "IdleLoop"
+        ],
+        "on_error": [
+            "IdleTimeUp"
+        ]
+    },
+    "IdleTimeUp": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "放置挂机时间到"
+        }
     }
 }
