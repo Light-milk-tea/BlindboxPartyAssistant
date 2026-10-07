@@ -1,6 +1,18 @@
 {
     "StartUp": {
         "recognition": "DirectHit",
+        "action": "Shell",
+        "cmd": "pidof com.palmpi.matrix.yofun.mumu",
+        "shell_timeout": 5000,
+        "focus": {
+            "Node.Action.Succeeded": "游戏已在运行，跳过唤醒"
+        },
+        "on_error": [
+            "StartUpBegin"
+        ]
+    },
+    "StartUpBegin": {
+        "recognition": "DirectHit",
         "action": "DoNothing",
         "next": [
             "StartUpCloseReward",
