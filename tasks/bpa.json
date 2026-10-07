@@ -4,13 +4,12 @@
             "name": "启动MuMu",
             "label": "启动MuMu",
             "description": "连接模拟器之前，根据「启动MuMu」任务是否勾选来启动 MuMu。",
-            "exec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "exec": "C:\\Windows\\System32\\wscript.exe",
             "args": [
-                "-NoProfile",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-File",
-                "../../../../../../resource/base/launch-mumu.ps1"
+                "//Nologo",
+                "//B",
+                "../../../../../../resource/base/run-hidden.vbs",
+                "launch-mumu.ps1"
             ],
             "controller": [
                 "Adb"
@@ -78,11 +77,10 @@
             "pipeline_override": {
                 "Idle": {
                     "args": [
-                        "-NoProfile",
-                        "-ExecutionPolicy",
-                        "Bypass",
-                        "-File",
-                        "{RESOURCE_DIR}/idle-budget.ps1",
+                        "//Nologo",
+                        "//B",
+                        "{RESOURCE_DIR}/run-hidden.vbs",
+                        "idle-budget.ps1",
                         "start",
                         "{minutes}"
                     ]

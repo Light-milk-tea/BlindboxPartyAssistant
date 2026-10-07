@@ -2,13 +2,12 @@
     "Idle": {
         "recognition": "DirectHit",
         "action": "Command",
-        "exec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "exec": "C:\\Windows\\System32\\wscript.exe",
         "args": [
-            "-NoProfile",
-            "-ExecutionPolicy",
-            "Bypass",
-            "-File",
-            "{RESOURCE_DIR}/idle-budget.ps1",
+            "//Nologo",
+            "//B",
+            "{RESOURCE_DIR}/run-hidden.vbs",
+            "idle-budget.ps1",
             "start",
             "0"
         ],
@@ -132,13 +131,12 @@
     "IdleCheckTime": {
         "recognition": "DirectHit",
         "action": "Command",
-        "exec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "exec": "C:\\Windows\\System32\\wscript.exe",
         "args": [
-            "-NoProfile",
-            "-ExecutionPolicy",
-            "Bypass",
-            "-File",
-            "{RESOURCE_DIR}/idle-budget.ps1",
+            "//Nologo",
+            "//B",
+            "{RESOURCE_DIR}/run-hidden.vbs",
+            "idle-budget.ps1",
             "check"
         ],
         "pre_delay": 0,
