@@ -1,0 +1,9 @@
+{
+    "LaunchMuMu": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "focus": {
+            "Node.Action.Succeeded": "MuMu 已就绪"
+        }
+    }
+}

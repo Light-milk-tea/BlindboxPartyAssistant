@@ -1,5 +1,30 @@
 {
+    "pretask": [
+        {
+            "name": "启动MuMu",
+            "label": "启动MuMu",
+            "description": "连接模拟器之前，根据「启动MuMu」任务是否勾选来启动 MuMu。",
+            "exec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "../../../../../../resource/base/launch-mumu.ps1"
+            ],
+            "controller": [
+                "Adb"
+            ]
+        }
+    ],
     "task": [
+        {
+            "name": "LaunchMuMu",
+            "label": "启动MuMu",
+            "entry": "LaunchMuMu",
+            "default_check": true,
+            "description": "勾选后，点击开始任务时会自动查找并启动 MuMu。已经开机则跳过。不勾选则不启动模拟器。"
+        },
         {
             "name": "StartUp",
             "label": "开始唤醒",
